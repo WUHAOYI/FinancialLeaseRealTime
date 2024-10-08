@@ -1,4 +1,4 @@
-#环境准本（Hadoop，hive，Kafka，zookeeper，Flume）、业务数据模拟、数据采集通道等与离线数仓一致
+环境准备（Hadoop，hive，Kafka，zookeeper，Flume）、业务数据模拟、数据采集通道等与离线数仓一致
 
 # 集群资源规划
 | **服务****名称** | **子****服务** | **服务器**<br/>**hadoop108** | **服务器**<br/>**hadoop109** | **服务器**<br/>**hadoop110** |

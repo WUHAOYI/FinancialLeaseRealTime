@@ -15,6 +15,7 @@ import org.apache.hadoop.hbase.client.AsyncConnection;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ForkJoinPool;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -40,6 +41,7 @@ public abstract class AsyncDimFunctionHBase<T> extends RichAsyncFunction<T, T> i
 
     @Override
     public void asyncInvoke(T input, ResultFuture<T> resultFuture) throws Exception {
+        ForkJoinPool forkJoinPool = new ForkJoinPool(16);
         CompletableFuture.supplyAsync(new Supplier<JSONObject>() {
             //添加redis缓存之后需要进行的操作流程：
             //1.判断要从HBase中读取的数据是否已经缓存过
@@ -53,7 +55,7 @@ public abstract class AsyncDimFunctionHBase<T> extends RichAsyncFunction<T, T> i
 //                System.out.println("从redis中读取的数据为:" + dim.toJSONString());
                 return dim;
             }
-        }).thenApplyAsync(new Function<JSONObject, JSONObject>() {
+        },forkJoinPool).thenApplyAsync(new Function<JSONObject, JSONObject>() {
             @Override
             public JSONObject apply(JSONObject dim) {
                 String tableName = getTable();
@@ -61,24 +63,25 @@ public abstract class AsyncDimFunctionHBase<T> extends RichAsyncFunction<T, T> i
                 //判断从redis中是否读取到数据
                 if (Objects.isNull(dim))
                 {
-                    System.out.println(tableName + "  " + id + "  从 hbase 读取");
+//                    System.out.println(tableName + "  " + id + "  从 hbase 读取");
                     //从 HBase 中异步读取数据
                     dim = HBaseUtil.asyncReadRow(asyncHBaseConnection, FinancialLeaseCommon.HBASE_NAMESPACE, tableName, id);
-                    //将数据写入到Redis中
+                    System.out.println(dim.getString("id") + "  " + dim.getString("name") + "  从 hbase 读取");
                     if (Objects.isNull(dim))
                     {
                         Log.error("没有匹配的维度信息，表名： " + getTable() + "，rowKey： " + getId(input));
                     }
-                    RedisUtil.asyncWriteDim(asyncRedisConnection,tableName + ":" + id,dim);
+                    //将数据写入到Redis中
+                    RedisUtil.asyncWriteDim(asyncRedisConnection, tableName + ":" + id, dim);
                 }else {
                     System.out.println(tableName + "  " + id + "  从 redis 读取");
                 }
                 return dim;
             }
-        }).thenAccept(new Consumer<JSONObject>() {
-            //补充维度表信息
+        },forkJoinPool).thenAccept(new Consumer<JSONObject>() {
             @Override
             public void accept(JSONObject dim) {
+                //补充维度表信息
                 addDim(input, dim);
                 // 收集结果
                 resultFuture.complete(Collections.singletonList(input));

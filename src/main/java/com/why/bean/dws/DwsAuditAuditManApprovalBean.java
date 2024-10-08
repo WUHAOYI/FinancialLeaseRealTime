@@ -1,4 +1,5 @@
-package com.why.bean;
+package com.why.bean.dws;
+import com.why.bean.TransientSink;
 import com.why.util.DateFormatUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,14 +9,13 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 /**
  * Created by WHY on 2024/9/8.
- * Functions: 审批域信审经办粒度审批取消实体类
+ * Functions: 审批域信审经办粒度审批通过实体类
  */
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DwsAuditAuditManCancelBean {
+public class DwsAuditAuditManApprovalBean {
     // 窗口起始时间
     String stt;
 
@@ -37,11 +37,14 @@ public class DwsAuditAuditManCancelBean {
     // 申请金额
     BigDecimal applyAmount;
 
+    // 批复金额
+    BigDecimal replyAmount;
+
     // 通过时间 yyyy-MM-dd HH:mm:ss.SSSSSS
     @TransientSink
-    String cancelTime;
+    String approveTime;
 
     public Long getTs() {
-        return DateFormatUtil.toTs(cancelTime);
+        return DateFormatUtil.toTs(approveTime);
     }
 }

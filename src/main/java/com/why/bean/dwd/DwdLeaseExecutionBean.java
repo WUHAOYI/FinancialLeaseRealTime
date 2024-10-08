@@ -1,10 +1,9 @@
-package com.why.bean;
+package com.why.bean.dwd;
 
 /**
  * Created by WHY on 2024/9/6.
- * Functions: 记录授信申请批复信息
+ * Functions: 记录起租信息
  */
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,23 +15,27 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DwdAuditReplyBean {
+public class DwdLeaseExecutionBean {
 
-    // 批复 ID
+    // 合同 ID
     String id;
+
+    // 授信 ID
+    String creditId;
 
     // 授信申请 ID
     String creditFacilityId;
 
-    // 批复时间 yyyy-MM-dd HH:mm:ss.SSSSSS
-    String replyTime;
+    // 起租时间
+    String executionTime;
+
+    // 申请金额
+    BigDecimal applyAmount;
 
     // 批复金额
     BigDecimal replyAmount;
 
-    // 还款利率
-    BigDecimal irr;
+    // 授信金额
+    BigDecimal creditAmount;
 
-    // 还款期数
-    Long period;
 }

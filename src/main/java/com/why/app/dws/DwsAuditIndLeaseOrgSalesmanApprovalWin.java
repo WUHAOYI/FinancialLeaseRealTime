@@ -2,10 +2,8 @@ package com.why.app.dws;
 
 import com.alibaba.fastjson.JSONObject;
 import com.why.app.func.AsyncDimFunctionHBase;
-import com.why.bean.DwdAuditApprovalBean;
-import com.why.bean.DwsAuditIndLeaseOrgSalesmanApprovalBean;
+import com.why.bean.dws.DwsAuditIndLeaseOrgSalesmanApprovalBean;
 import com.why.util.*;
-import org.apache.doris.flink.sink.DorisSink;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.functions.MapFunction;
@@ -15,15 +13,11 @@ import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
 import org.apache.flink.streaming.api.datastream.*;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.functions.async.AsyncFunction;
-import org.apache.flink.streaming.api.functions.async.RichAsyncFunction;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
-import org.apache.flink.streaming.api.functions.windowing.WindowFunction;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.util.Collector;
-import org.apache.hadoop.shaded.com.nimbusds.jose.util.JSONStringUtils;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -249,15 +243,15 @@ public class DwsAuditIndLeaseOrgSalesmanApprovalWin {
             }
         }, 60L, TimeUnit.SECONDS);
 
-//        D1NameStream.print();
-        //TODO 9 将数据写出到Doris
-        //现在数据流中数据的格式是DwsAuditIndLeaseOrgSalesmanApprovalBean类型，需要将其转化为JSONString类型，再进行写入
-        D1NameStream.map(new MapFunction<DwsAuditIndLeaseOrgSalesmanApprovalBean, String>() {
-            @Override
-            public String map(DwsAuditIndLeaseOrgSalesmanApprovalBean bean) throws Exception {
-                return Bean2JSONUtil.Bean2Json(bean);
-            }
-        }).sinkTo(DorisUtil.getDorisSink("financial_lease_realtime.dws_audit_industry_lease_organization_salesman_approval_win","dws_audit_industry_lease_organization_salesman_approval_win"));
+        D1NameStream.print();
+//        //TODO 9 将数据写出到Doris
+//        //现在数据流中数据的格式是DwsAuditIndLeaseOrgSalesmanApprovalBean类型，需要将其转化为JSONString类型，再进行写入
+//        D1NameStream.map(new MapFunction<DwsAuditIndLeaseOrgSalesmanApprovalBean, String>() {
+//            @Override
+//            public String map(DwsAuditIndLeaseOrgSalesmanApprovalBean bean) throws Exception {
+//                return Bean2JSONUtil.Bean2Json(bean);
+//            }
+//        }).sinkTo(DorisUtil.getDorisSink("financial_lease_realtime.dws_audit_industry_lease_organization_salesman_approval_win","dws_audit_industry_lease_organization_salesman_approval_win"));
 
         //TODO 执行
         env.execute();

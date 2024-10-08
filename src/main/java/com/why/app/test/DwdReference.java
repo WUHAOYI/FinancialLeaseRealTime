@@ -1,7 +1,7 @@
 package com.why.app.test;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.why.bean.*;
+import com.why.bean.dwd.*;
 import com.why.common.FinancialLeaseCommon;
 import com.why.util.CreateEnvUtil;
 import com.why.util.KafkaUtil;

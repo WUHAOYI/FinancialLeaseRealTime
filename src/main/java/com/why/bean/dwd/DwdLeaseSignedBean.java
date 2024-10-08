@@ -1,8 +1,8 @@
-package com.why.bean;
+package com.why.bean.dwd;
 
 /**
  * Created by WHY on 2024/9/6.
- * Functions: 记录新增授信信息
+ * Functions: 记录签约信息
  */
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,16 +15,19 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DwdCreditAddBean {
+public class DwdLeaseSignedBean {
+
+    // 合同 ID
+    String id;
 
     // 授信 ID
-    String id;
+    String creditId;
 
     // 授信申请 ID
     String creditFacilityId;
 
-    // 新增授信时间
-    String addTime;
+    // 签约时间
+    String signedTime;
 
     // 申请金额
     BigDecimal applyAmount;

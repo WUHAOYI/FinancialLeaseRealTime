@@ -1,4 +1,4 @@
-package com.why.bean;
+package com.why.bean.dwd;
 
 /**
  * Created by WHY on 2024/9/6.

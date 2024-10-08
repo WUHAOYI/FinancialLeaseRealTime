@@ -2,7 +2,7 @@ package com.why.app.dws;
 
 import com.alibaba.fastjson.JSONObject;
 import com.why.app.func.AsyncDimFunctionHBase;
-import com.why.bean.DwsAuditIndLeaseOrgSalesmanCancelBean;
+import com.why.bean.dws.DwsAuditIndLeaseOrgSalesmanCancelBean;
 import com.why.util.*;
 import org.apache.flink.api.common.eventtime.SerializableTimestampAssigner;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;

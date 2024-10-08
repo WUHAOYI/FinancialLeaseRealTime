@@ -1,21 +1,21 @@
-package com.why.bean;
+package com.why.bean.dwd;
 
-import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 /**
  * Created by WHY on 2024/9/6.
- * Functions: 记录授信申请通过信息
- * 涉及到的表：credit_facility reply
+ * Functions: 记录授信申请取消信息
+ * 涉及到的表：credit_facility
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DwdAuditApprovalBean {
+public class DwdAuditCancelBean {
     // 授信申请 ID
     String id;
 
@@ -28,9 +28,6 @@ public class DwdAuditApprovalBean {
     // 行业 ID
     String industryId;
 
-    // 批复 ID
-    String replyId;
-
     // 业务经办 ID
     String salesmanId;
 
@@ -40,19 +37,7 @@ public class DwdAuditApprovalBean {
     // 申请授信金额
     BigDecimal applyAmount;
 
-    // TODO 批复金额
-    BigDecimal replyAmount;
-
-    // TODO 通过时间 yyyy-MM-dd HH:mm:ss.SSSSSS
-    String approveTime;
-
-    // TODO 批复时间 yyyy-MM-dd HH:mm:ss.SSSSSS
-    String replyTime;
-
-    // TODO 还款利率
-    BigDecimal irr;
-
-    // TODO 还款期数
-    Long period;
+    //TODO 取消时间 yyyy-MM-dd HH:mm:ss.SSSSSS
+    String cancelTime;
 
 }

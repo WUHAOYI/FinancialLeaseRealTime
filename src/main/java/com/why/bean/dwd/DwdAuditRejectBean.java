@@ -1,4 +1,4 @@
-package com.why.bean;
+package com.why.bean.dwd;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
